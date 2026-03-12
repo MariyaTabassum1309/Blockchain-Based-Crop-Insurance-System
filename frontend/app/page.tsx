@@ -7,24 +7,23 @@ import Button from "@/components/ui/Button";
 export default function Home() {
   const [wallet, setWallet] = useState("");
 
-  const connectWallet = async () => {
-    // Use (window as any) to bypass TypeScript server-side build error
-    if (!(window as any).ethereum) {
-      alert("Please install MetaMask!");
-      return;
-    }
+ const connectWallet = async () => {
+  if (typeof window === "undefined" || !(window as any).ethereum) {
+    alert("Please install MetaMask!");
+    return;
+  }
 
-    try {
-      const accounts = await (window as any).ethereum.request({
-        method: "eth_requestAccounts",
-      });
+  try {
+    const accounts = await (window as any).ethereum.request({
+      method: "eth_requestAccounts",
+    });
 
-      setWallet(accounts[0]);
-    } catch (error) {
-      console.error(error);
-      alert("Wallet connection failed");
-    }
-  };
+    setWallet(accounts[0]);
+  } catch (error) {
+    console.error(error);
+    alert("Wallet connection failed");
+  }
+};
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-start pt-16 px-6 overflow-hidden">
