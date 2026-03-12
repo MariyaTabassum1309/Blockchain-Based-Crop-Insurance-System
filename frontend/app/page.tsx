@@ -4,6 +4,15 @@ import Link from "next/link";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 
+// Extend Window type for MetaMask
+declare global {
+  interface Window {
+    ethereum?: {
+      request: (args: { method: string; params?: any[] }) => Promise<any>;
+    };
+  }
+}
+
 export default function Home() {
   const [wallet, setWallet] = useState("");
 
@@ -24,6 +33,7 @@ export default function Home() {
       alert("Wallet connection failed");
     }
   };
+  
   return (
   <div className="relative min-h-screen flex flex-col items-center justify-start pt-16 px-6 overflow-hidden">
 
